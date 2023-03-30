@@ -408,9 +408,9 @@ var toolbar=new w2toolbar({
                 this.refresh();
                 break;
             case "rotate_left":
-                window.postMessage(["click", event.target],"*")
+                window.postMessage(["click", event.target],"*");
             case "rotate_right":
-                window.postMessage(["click", event.target],"*")
+                window.postMessage(["click", event.target],"*");
             case "enable_history":
             case "enable_img2img":
             case "use_correction":
