@@ -326,7 +326,7 @@ var toolbar=new w2toolbar({
                 }
                 document.querySelector("#container").style.pointerEvents="none";
             case "retry":
-                console.log("run to case retry!")
+                console.log("run to case retry!");
                 this.disable(...outpaint_result_func_lst);
                 parent.config_obj["interrogate_mode"]=false;
                 window.postMessage(["transfer",""],"*")
