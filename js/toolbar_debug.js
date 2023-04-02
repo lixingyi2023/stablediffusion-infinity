@@ -414,6 +414,7 @@ var toolbar=new w2toolbar({
                 break;
             case "update_pcd":
                 this.enable(...camera_transform_lst);
+                this.disable("zoom_in", "zoom_out");
                 window.postMessage(["click", event.target],"*");
                 break;
             case "rotate_left":
