@@ -104,6 +104,7 @@ var resize_button_lst=['clear', 'load', 'save', "upload", 'export', "selection",
 var outpaint_button_lst=['clear', 'load', 'save', "canvas", "eraser", "upload", 'export', 'resize_selection', "zoom_in", "zoom_out",'help', "setting", "interrogate", "undo", "redo"];
 var outpaint_result_lst=["accept", "cancel", "retry", "prev", "current", "next"];
 var outpaint_result_func_lst=["accept", "retry", "prev", "current", "next"];
+var camera_transform_lst=["rotate_left", "rotate_right"];
 
 function check_button(id,text="",checked=true,tooltip="")
 {
@@ -219,8 +220,10 @@ var toolbar=new w2toolbar({
             }
         },
         { type: "button", id: "random_seed", tooltip: "Set a random seed", icon: "fa-solid fa-dice" },
-        { type: "button", id: "rotate_left", tooltip: "Rotate left", icon: "fa-solid fa-dice" },
-        { type: "button", id: "rotate_right", tooltip: "Rotate right", icon: "fa-solid fa-dice" },
+        { type: "new-line"},
+        { type: "button", id: "update_pcd", tooltip: "Update pointclouds", icon: "fa-solid fa-dice" },
+        { type: "button", id: "rotate_left", tooltip: "Rotate left", icon: "fa-solid fa-dice", disabled: true },
+        { type: "button", id: "rotate_right", tooltip: "Rotate right", icon: "fa-solid fa-dice", disabled: true },
     ],
     onClick(event) {
         switch(event.target){
@@ -255,6 +258,7 @@ var toolbar=new w2toolbar({
                 if(this.upload_mode)
                 {
                     export_image();
+                    this.disable(...camera_transform_lst);
                 }
                 else
                 {
@@ -340,6 +344,7 @@ var toolbar=new w2toolbar({
                 window.postMessage(["transfer",""],"*")
                 break
             case "accept":
+                this.disable(...camera_transform_lst);
             case "cancel":
                 this.hide(...outpaint_result_lst);
                 this.disable(...outpaint_result_func_lst);
@@ -407,10 +412,16 @@ var toolbar=new w2toolbar({
                 parent.config_obj=this.config_obj;
                 this.refresh();
                 break;
+            case "update_pcd":
+                this.enable(...camera_transform_lst);
+                window.postMessage(["click", event.target],"*");
+                break;
             case "rotate_left":
                 window.postMessage(["click", event.target],"*");
+                break;
             case "rotate_right":
                 window.postMessage(["click", event.target],"*");
+                break;
             case "enable_history":
             case "enable_img2img":
             case "use_correction":
